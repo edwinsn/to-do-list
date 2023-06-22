@@ -48,7 +48,7 @@
                           (fn [this status {:keys [item/id]}]
                             (dom/input {:type           "checkbox"
                                         :defaultChecked status
-                                        :onChange #(handleTaskStatusUpdate this status id) ;#(form/edit! this FormClass id)
+                                        :onChange #(handleTaskStatusUpdate this status id)
                                         })
                             )
                           :item/name

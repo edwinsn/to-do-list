@@ -45,7 +45,6 @@
                      )
                   )})
 
-
 #?(:clj
    (defmutation update-item-status [env {
                                          id   :id
@@ -61,16 +60,6 @@
 
 ;
 #?(
-   :clj
-   (defmutation delete-task [env {
-                                         id   :id
-                                         status :status
-                                         }]
-     {::pc/params #{:item/id}
-      ::pc/output [:item/id]}
-     (form/delete! env :item/id id))
-
-
    :cljs
    (defmutation update-item-status [{
                                      id   :id
@@ -87,5 +76,5 @@
 (def attributes [id item-name description status dificulty all-items])
 
 #?(:clj
-   (def resolvers [update-item-status delete-task])
+   (def resolvers [update-item-status])
    )
