@@ -1,0 +1,40 @@
+{:deps     {:aliases [:dev :test]}
+ :nrepl    {:port 9000}
+ :jvm-opts ["-Xmx2G"]
+ :repositories [
+                ["cognitect-dev-tools" {:url      "https://dev-tools.cognitect.com/maven/releases/"
+                                        :username :env
+                                        :password :env}]]
+ :builds   {:main     {:target     :browser
+                       :output-dir "resources/public/js/main"
+                       :asset-path "/js/main"
+                       :dev        {:compiler-options {:external-config {:guardrails {:emit-spec? true :throw? false}}}}
+                       :modules    {:main {:init-fn com.tasks.client/init}}
+                       :js-options {:resolve
+                                    {
+                                     "@js-joda/timezone"
+                                     {:target  :npm
+                                      :require "@js-joda/timezone/dist/js-joda-timezone-10-year-range.min.js"}}}
+                       :devtools   {:preloads   [com.fulcrologic.fulcro.inspect.preload]
+                                    :after-load com.tasks.client/refresh}}
+
+            :test     {:target           :browser-test
+                       :test-dir         "resources/public/js/test"
+                       :ns-regexp        "-spec$"
+                       :compiler-options {:static-fns      false
+                                          :external-config {:guardrails {:throw? true :emit-spec? true}}}
+                       :js-options       {:resolve {"react-dom" {:target  :npm
+                                                                 :require "react-dom/cjs/react-dom.production.min.js"}
+                                                    "react"     {:target  :npm
+                                                                 :require "react/cjs/react.production.min.js"}}}
+                       :devtools         {:http-port          8081
+                                          :http-resource-root "public"
+                                          :http-root          "resources/public/js/test"}}
+
+            :ci-tests {:target           :karma
+                       :js-options       {:js-provider :shadow}
+                       :compiler-options {:static-fns      false ; required for mocking to work
+                                          :external-config {:guardrails {:throw? true :emit-spec? true}}}
+                       :output-to        "target/ci.js"
+                       :ns-regexp        "-spec$"}}}
+

@@ -1,0 +1,7 @@
+<repositories>
+    <repository>
+        <url>https://dev-tools.cognitect.com/maven/releases/</url>
+        <id>cognitect-dev-tools</id>
+        <name>Cognitect dev-tools</name>
+    </repository>
+</repositories>
